@@ -279,24 +279,23 @@
       })
   
 
-      $(".delBtn").on("click",function(){        
+      $('tbody').on('click','.delBtn',function(){
         $("#delForm > input[name='id']").val($(this).attr("data"))  
-        confirmForm.show()           
+        confirmForm.show()
       })
 
-      $(".editBtn").on("click", async function(){          
+      $('tbody').on('click','.editBtn', async function(){
         const id = $(this).attr("data")
         response = await fetch('/products/' + id)
-        product = await response.json()
-        
+        product = await response.json()        
         if(product.status == true){
           $("#editForm #id").val(id)
           $("#editForm #name").val(product.name)
           $("#editForm #quantity").val(product.quantity)
           $("#editForm #price").val(product.price)          
           editForm.show() 
-        }              
-      })        
+        }   
+      })         
     })
    
   </script>
