@@ -19,11 +19,17 @@ Route::get('/', [MainController::class, 'home']);
 
 Route::get('/products', [MainController::class, 'products']);
 
+Route::get('/products/fetch', [MainController::class, 'products_fetch']);
+
+Route::get('/products/{id}', [MainController::class, 'get_product']);
+
 Route::post('/products/add', [MainController::class, 'product_add']);
 
 Route::post('/products/edit', [MainController::class, 'product_edit']);
 
-Route::get('/products/delete/{id}', [MainController::class, 'product_delete']);
+Route::post('/products/del', [MainController::class, 'product_del']);
 
-Route::get('/products/{id}', [MainController::class, 'get_product']);
+
+
+
 
