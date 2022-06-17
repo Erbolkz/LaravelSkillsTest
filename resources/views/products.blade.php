@@ -84,7 +84,7 @@
   </div>
   
 
-  <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModal" aria-hidden="true">
+  <div class="modal fade" id="editModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="editModal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content bg-dark">
         <div class="modal-header">
@@ -122,7 +122,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <p>Are you sure?</p>
+          <p id="confirmModalMsg">Are you sure?</p>
           <form id="delForm">
             @csrf
             <input type="hidden" name="id" id="id" value="">
@@ -279,9 +279,15 @@
       })
   
 
-      $('tbody').on('click','.delBtn',function(){
-        $("#delForm > input[name='id']").val($(this).attr("data"))  
-        confirmForm.show()
+      $('tbody').on('click','.delBtn', async function(){
+        const id = $(this).attr("data")
+        response = await fetch('/products/' + id)
+        product = await response.json()     
+        if(product.status == true){
+          $("#delForm #id").val(id)  
+          $("#confirmModalMsg").html("Do you want to delete product: " + product.name + "?")          
+          confirmForm.show()
+        }        
       })
 
       $('tbody').on('click','.editBtn', async function(){
